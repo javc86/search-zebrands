@@ -1,10 +1,16 @@
-import FactoryApi from "../modules/api/FactoryApi";
+import { SingletonApi } from "../modules/api";
 
-export const searchModel = async (search: string) => {
-  const factory = new FactoryApi();
-  const api = factory.createApi();
-  const response = await api.request(`GET /users/${search}`, {
-    username: 'USERNAME'
+export interface IParameter {
+  q: string;
+  page?: number;
+}
+
+export const searchModel = async (param: IParameter) => {
+  const api = SingletonApi.getInstance();
+  const response = await api.request('GET /search/users', {
+    ...param,
+    sort: 'repositories',
+    orders: 'desc',
   });
   return response;
 };

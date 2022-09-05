@@ -1,20 +1,41 @@
 import { Request, Response } from "express";
-import { searchModel } from "../models/repositories";
+import { searchModel, IParameter } from "../models/repositories";
 
 export const searchController = async (req: Request, res: Response) => {
   try {
-    const search = req.query.search as string;
-    if (search) {
-      const repositories = await searchModel(search);
+    const q = req.query.q as string;
+    const page = req.query.page as string;
+    if (q) {
+      const query: IParameter = {
+        q
+      }
+
+      const regex = new RegExp(/^\d+$/);
+      if (page && regex.test(page)) {
+        query.page = parseInt(page);
+      } else if (page) {
+        res.status(400).json({
+          error: 'parameter "page" must be only numbers'
+        });
+        return
+      }
+
+      const response = await searchModel(query);
       res.json({
-        repositories
+        repositories: response.data
       });
     } else {
-      res.json({
-        error: 'parameter "search" is required and not empty'
+      res.status(400).json({
+        error: 'parameter "q" is required and not empty'
       });
     }
   } catch (error) {
-    throw error;
+    // @ts-ignore
+    if (error?.message) {
+      // @ts-ignore
+      res.status(error?.status || 400).json({ error: error.message });
+    } else {
+      res.status(400).json({ error: 'Bad request' });
+    }
   }
 };

@@ -1,7 +1,8 @@
 import FactoryApi from './FactoryApi';
+import { Octokit } from 'octokit';
 
 export const SingletonApi = (() => {
-  let instance: FactoryApi;
+  let instance: Octokit;
 
   const createInstance = () => {
     return new FactoryApi();
@@ -10,7 +11,7 @@ export const SingletonApi = (() => {
   return {
     getInstance: () => {
       if (!instance) {
-        instance = createInstance();
+        instance = createInstance().createApi();
       }
 
       return instance;
