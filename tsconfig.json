@@ -12,9 +12,15 @@
     "sourceMap": true,
     "target": "esnext",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "typeRoots": ["./src/server/global.d.ts", "./node_modules/@types"]
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
 }

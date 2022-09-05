@@ -4,6 +4,7 @@ import RepositoriesScreen from './screens';
 const routes: IRouteProps[] = [
   {
     path: '/',
+    exact: true,
     Component: RepositoriesScreen,
   }
 ];
