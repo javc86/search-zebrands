@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { default as routers } from './routers';
+
 dotenv.config();
 
 const app = express();
@@ -16,6 +18,9 @@ if (process.env.APP_ENV === 'dev') {
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use('/api', routers.repositoriesRoutes);
+app.use('/api', routers.usersRoutes);
 
 app.get('*', (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, process.env.APP_ENV === 'dev' ? '../../public/index.html' : '../public/index.html'));

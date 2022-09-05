@@ -6,7 +6,6 @@ import Nav from './Nav';
 import Header from './components/Header';
 
 export default function App() {
-  console.log('aaaaaapppp');
   return (
     <Provider store={store}>
       <BrowserRouter>
