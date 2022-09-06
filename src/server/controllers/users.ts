@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { searchModel, IParameter } from "../models/repositories";
+import { searchModel, IParameter } from "../models/users";
 
 export const searchController = async (req: Request, res: Response) => {
   try {
@@ -22,7 +22,7 @@ export const searchController = async (req: Request, res: Response) => {
 
       const response = await searchModel(query);
       res.json({
-        repositories: response.data
+        users: response.data
       });
     } else {
       res.status(400).json({
