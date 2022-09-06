@@ -1,8 +1,10 @@
 import React from 'react';
-import { Search, Content } from '../../../components';
+import { Search, Content, List } from '../../../components';
 import { useAppDispatch, useAppSelector } from '../../../hook';
 import { fetchRepositories } from '../actions';
 import { RootState } from '../../../store';
+import RepositoryItem from '../components/RepositoryItem';
+import { IRepostory } from '../models';
 
 export default function RepositoriesScreen() {
   const dispatch = useAppDispatch();
@@ -17,6 +19,10 @@ export default function RepositoriesScreen() {
     }
   };
 
+  const renderItem = (repository: IRepostory) => (
+    <RepositoryItem repository={repository} />
+  );
+
   return (
     <>
       <Search
@@ -24,6 +30,13 @@ export default function RepositoriesScreen() {
         onSearch={onSearch}
       />
       <Content loader={loading}>
+        {!loading && (
+          <List
+            listName="repositories-list"
+            items={list}
+            renderItem={renderItem}
+          />
+        )}
       </Content>
     </>
   )

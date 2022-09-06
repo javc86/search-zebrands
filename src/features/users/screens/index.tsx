@@ -1,9 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, Content } from '../../../components';
+import { Search, Content, List } from '../../../components';
 import { useAppDispatch, useAppSelector } from '../../../hook';
 import { fetchUsers } from '../actions';
 import { RootState } from '../../../store';
+import UserItem from '../components/UserItem';
+import { IUser } from '../models';
 
 export default function UsersScreen() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,10 @@ export default function UsersScreen() {
     }
   };
 
+  const renderItem = (user: IUser) => (
+    <UserItem user={user} />
+  );
+
   return (
     <>
       <Search
@@ -25,6 +30,13 @@ export default function UsersScreen() {
         onSearch={onSearch}
       />
       <Content loader={loading}>
+        {!loading && (
+          <List
+            listName="users-list"
+            items={list}
+            renderItem={renderItem}
+          />
+        )}
       </Content>
     </>
   )

@@ -1,8 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Container, Spinner } from 'react-bootstrap';
-import { useAppDispatch, useAppSelector } from '../hook';
-import { RootState } from '../store';
 
 interface Props {
   loader?: boolean;
@@ -10,9 +7,6 @@ interface Props {
 }
 
 export default function Content({ children, loader }: Props) {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   return (
     <Container>
       {loader && (
